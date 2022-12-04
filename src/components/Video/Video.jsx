@@ -62,6 +62,24 @@ const Video = ({ video }) => {
                     }}
                 />
                 <Head>
+                    <meta property="og:video" content={videoData.hls} />
+                    <meta property="og:video:width" content="1280" />
+                    <meta property="og:video:height" content="720" />
+                    <meta
+                        property="og:video:url"
+                        content={`${APP.URL}/watch/${video.PostHashHex}`}
+                    />
+                    <meta property="og:video:type" content="text/html" />
+                    <meta
+                        property="og:video:secure_url"
+                        content={`${APP.URL}/watch/${video.PostHashHex}`}
+                    />
+                    <meta property="twitter:player:width" content="1280" />
+                    <meta property="twitter:player:height" content="720" />
+                    <meta
+                        name="twitter:player"
+                        content={`${APP.EMBED_URL}/${video.PostHashHex}`}
+                    />
                     <link
                         rel="iframely player"
                         type="text/html"
