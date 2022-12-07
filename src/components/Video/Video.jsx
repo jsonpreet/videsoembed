@@ -24,12 +24,15 @@ const Video = ({ video }) => {
     const [videoUrl, setVideoUrl] = useState(null)
 
     useEffect(() => {
-        if (!extraData.isLivePeer) {
+        if (extraData && !extraData.isLivePeer) {
+            getVideoData();
+            setVideoUrl(getVideoUrl(video))
+        } else {
             getVideoData();
             setVideoUrl(getVideoUrl(video))
         } 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [video, extraData])
+    }, [video])
 
     const getVideoData = async () => {
         const deso = new Deso({ identityConfig: { host: "server" } })
@@ -46,7 +49,6 @@ const Video = ({ video }) => {
             console.error(video.PostHashHex, 'thumbnail', error);
         }
     }
-
     return (
         <>
             <NextSeo
@@ -59,14 +61,14 @@ const Video = ({ video }) => {
                     url: `${APP.URL}/watch/${video.PostHashHex}`,
                     images: [
                         {
-                            url: videoData ? videoData.thubmnail : extraData.Thumbnail,
+                            url: videoData ? videoData.thumbnail : extraData?.Thumbnail,
                             alt: truncate(videoTitle, 100),
                         },
                     ],
                 }}
             />
             <Head>
-                <meta property="og:video" content={videoData ? videoData.hls : extraData.videoURL} />
+                <meta property="og:video" content={videoData ? videoData.hls : extraData?.videoURL} />
                 <meta property="og:video:width" content="1280" />
                 <meta property="og:video:height" content="720" />
                 <meta
@@ -102,10 +104,10 @@ const Video = ({ video }) => {
                         />
                         : 
                         <VideoPlayer
-                            hls={sanitizeLvprUrl(extraData.videoURL)}
+                            hls={sanitizeLvprUrl(extraData?.videoURL)}
                             video={video}
                             extraData={extraData}
-                            poster={extraData.Thumbnail}
+                            poster={extraData?.Thumbnail}
                         />
                     }
             </div>
