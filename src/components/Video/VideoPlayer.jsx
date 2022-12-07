@@ -119,16 +119,16 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
                     <Hls version="latest" poster={poster}>
                         <source data-src={hls} type="application/x-mpegURL"/>
                     </Hls>
-                    {/* <DefaultUi noControls noPoster>
+                    <DefaultUi noControls noPoster>
                         <Poster fit='contain' />
                         <DefaultControls hideOnMouseLeave activeDuration={2000} />
                         <DefaultSettings />
-                    </DefaultUi> */}
+                    </DefaultUi>
 
-                    <DefaultUi noControls>
+                    {/* <DefaultUi noControls>
                         <DefaultControls hideOnMouseLeave activeDuration={2000} />
                         <DefaultSettings />
-                    </DefaultUi>
+                    </DefaultUi> */}
                 </Player>
             </div>
             {showContextMenu ?
