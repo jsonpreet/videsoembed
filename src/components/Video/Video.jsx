@@ -27,7 +27,8 @@ const Video = ({ video }) => {
         if (extraData && !extraData.isLivePeer) {
             getVideoData();
             setVideoUrl(getVideoUrl(video))
-        } else {
+        }
+        else if (!extraData) {
             getVideoData();
             setVideoUrl(getVideoUrl(video))
         } 
