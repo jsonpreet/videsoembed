@@ -43,7 +43,7 @@ const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, 
 
         return (
         <div
-            className="absolute z-10 py-2 text-sm text-white bg-gray-900 bg-opacity-90 rounded-xl"
+            className="absolute z-50 py-2 text-sm text-white bg-gray-900 bg-opacity-90 rounded-xl"
             style={{ top: position.y, left: position.x }}
             ref={contextMenuRef}
         >
