@@ -94,22 +94,25 @@ const Video = ({ video }) => {
                 />
             </Head>
             <div className="relative w-screen h-screen">
-                    {videoData ?
-                        <VideoPlayer
-                            source={videoUrl}
-                            videoData={videoData}
-                            hls={videoData.hls}
-                            video={video}
-                            poster={videoData.thubmnail}
-                        />
-                        : 
+                {!extraData && videoData !== null ?
+                    <VideoPlayer
+                        source={videoUrl}
+                        videoData={videoData}
+                        hls={videoData.hls}
+                        video={video}
+                        poster={videoData.thubmnail}
+                    />
+                    : extraData !== null && !videoData ?
                         <VideoPlayer
                             hls={sanitizeLvprUrl(extraData?.videoURL)}
                             video={video}
                             extraData={extraData}
                             poster={extraData?.Thumbnail}
-                        />
-                    }
+                        /> : 
+                        <div className='flex items-center w-screen h-screen justify-center'>
+                            <img src='./default-black.jpg' alt='Videso' />
+                        </div>
+                    } 
             </div>
          </>
     )
