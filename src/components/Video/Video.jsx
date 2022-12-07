@@ -19,14 +19,15 @@ const VideoPlayer = dynamic(() => import('./VideoPlayer'), {
 const Video = ({ video }) => {
     const [videoData, setVideoData] = useState(null);
     const userProfile = video?.ProfileEntryResponse;
-    const videoUrl = getVideoUrl(video);
-    const videoTitle = getVideoTitle(video);
     const extraData = getVideoExtraData(video);
+    const videoTitle = getVideoTitle(video);
+    const [videoUrl, setVideoUrl] = useState(null)
 
     useEffect(() => {
         if (!extraData.isLivePeer) {
             getVideoData();
-        }
+            setVideoUrl(getVideoUrl(video))
+        } 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [video, extraData])
 
