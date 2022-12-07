@@ -107,8 +107,8 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
 
 
     return (
-        <div onContextMenu={onContextClick}>
-            <div className={`md:relative z-[5] aspect-[16/9]`}>
+        <div onContextMenu={onContextClick} className="relative group">
+            <div className="relative z-[5]">
                 <Player
                     tabIndex={1}
                     ref={playerRef}
