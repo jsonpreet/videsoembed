@@ -9,6 +9,8 @@ import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { APP } from '@utils/constants';
 import truncate from '@utils/truncate';
+import { getVideoExtraData } from '@utils/getVideoExtraData';
+import sanitizeLvprUrl from '@utils/sanitizeLvprUrl';
 
 const VideoPlayer = dynamic(() => import('./VideoPlayer'), {
   ssr: false
@@ -19,11 +21,14 @@ const Video = ({ video }) => {
     const userProfile = video?.ProfileEntryResponse;
     const videoUrl = getVideoUrl(video);
     const videoTitle = getVideoTitle(video);
+    const extraData = getVideoExtraData(video);
 
     useEffect(() => {
-        getVideoData();
+        if (!extraData.isLivePeer) {
+            getVideoData();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [video])
+    }, [video, extraData])
 
     const getVideoData = async () => {
         const deso = new Deso({ identityConfig: { host: "server" } })
@@ -43,63 +48,67 @@ const Video = ({ video }) => {
 
     return (
         <>
-            {videoData ?
-            <>
-                <NextSeo
-                    title={truncate(videoTitle, 100)}
-                    description={truncate(videoTitle, 100)}
-                    canonical={`${APP.URL}/watch/${video.PostHashHex}`}
-                    openGraph={{
-                        title: truncate(videoTitle, 100),
-                        description: truncate(videoTitle, 100),
-                        url: `${APP.URL}/watch/${video.PostHashHex}`,
-                        images: [
-                            {
-                                url: videoData.thubmnail,
-                                alt: truncate(videoTitle, 100),
-                            },
-                        ],
-                    }}
+            <NextSeo
+                title={truncate(videoTitle, 100)}
+                description={truncate(videoTitle, 100)}
+                canonical={`${APP.URL}/watch/${video.PostHashHex}`}
+                openGraph={{
+                    title: truncate(videoTitle, 100),
+                    description: truncate(videoTitle, 100),
+                    url: `${APP.URL}/watch/${video.PostHashHex}`,
+                    images: [
+                        {
+                            url: videoData ? videoData.thubmnail : extraData.Thumbnail,
+                            alt: truncate(videoTitle, 100),
+                        },
+                    ],
+                }}
+            />
+            <Head>
+                <meta property="og:video" content={videoData ? videoData.hls : extraData.videoURL} />
+                <meta property="og:video:width" content="1280" />
+                <meta property="og:video:height" content="720" />
+                <meta
+                    property="og:video:url"
+                    content={`${APP.URL}/watch/${video.PostHashHex}`}
                 />
-                <Head>
-                    <meta property="og:video" content={videoData.hls} />
-                    <meta property="og:video:width" content="1280" />
-                    <meta property="og:video:height" content="720" />
-                    <meta
-                        property="og:video:url"
-                        content={`${APP.URL}/watch/${video.PostHashHex}`}
-                    />
-                    <meta property="og:video:type" content="text/html" />
-                    <meta
-                        property="og:video:secure_url"
-                        content={`${APP.URL}/watch/${video.PostHashHex}`}
-                    />
-                    <meta property="twitter:player:width" content="1280" />
-                    <meta property="twitter:player:height" content="720" />
-                    <meta
-                        name="twitter:player"
-                        content={`${APP.EMBED_URL}/${video.PostHashHex}`}
-                    />
-                    <link
-                        rel="iframely player"
-                        type="text/html"
-                        href={`${APP.EMBED_URL}/${video.PostHashHex}`}
-                        media="(aspect-ratio: 1280/720)"
-                    />
-                </Head>
-                <div className="relative w-screen h-screen">
-                    <VideoPlayer
-                        source={videoUrl}
-                        videoData={videoData}
-                        hls={videoData.hls}
-                        video={video}
-                        poster={videoData.thubmnail}
-                    />
-                </div>
-            </>
-                : null
-            }
-        </>
+                <meta property="og:video:type" content="text/html" />
+                <meta
+                    property="og:video:secure_url"
+                    content={`${APP.URL}/watch/${video.PostHashHex}`}
+                />
+                <meta property="twitter:player:width" content="1280" />
+                <meta property="twitter:player:height" content="720" />
+                <meta
+                    name="twitter:player"
+                    content={`${APP.EMBED_URL}/${video.PostHashHex}`}
+                />
+                <link
+                    rel="iframely player"
+                    type="text/html"
+                    href={`${APP.EMBED_URL}/${video.PostHashHex}`}
+                    media="(aspect-ratio: 1280/720)"
+                />
+            </Head>
+            <div className="relative w-screen h-screen">
+                    {videoData ?
+                        <VideoPlayer
+                            source={videoUrl}
+                            videoData={videoData}
+                            hls={videoData.hls}
+                            video={video}
+                            poster={videoData.thubmnail}
+                        />
+                        : 
+                        <VideoPlayer
+                            hls={sanitizeLvprUrl(extraData.videoURL)}
+                            video={video}
+                            extraData={extraData}
+                            poster={extraData.Thumbnail}
+                        />
+                    }
+            </div>
+         </>
     )
 }
 

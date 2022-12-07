@@ -15,7 +15,7 @@ import { getCurrentDuration } from '@utils/getCurrentDuration'
 import { APP } from '@utils/constants'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
+const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poster }) => {
     const router = useRouter()
     const playerRef = useRef()
     const supabase = useSupabaseClient()
@@ -24,7 +24,7 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
     const [isVideoLoop, setIsVideoLoop] = useState(false)
     const [isStarted, setisStarted] = useState(false)
     const { pathname } = useRouter()
-    const currentDuration = getCurrentDuration(videoData.data.Duration);
+    const currentDuration = getCurrentDuration(videoData ? videoData.data.Duration : extraData.Duration);
     const reader = APP.PublicKeyBase58Check;
 
     const handleKeyboardShortcuts = () => {
@@ -141,11 +141,12 @@ const PlayerInstance = ({ videoData, video, source, ratio, hls, poster }) => {
     )
 }
 
-const VideoPlayer = ({videoData, video, source, poster, ratio = '16:9', wrapperClassName, hls}) => {
+const VideoPlayer = ({videoData, extraData, video, source, poster, ratio = '16:9', wrapperClassName, hls}) => {
     return (
         <div className={clsx('overflow-hidden', wrapperClassName)}>
             <PlayerInstance
                 videoData={videoData}
+                extraData={extraData}
                 source={source}
                 video={video}
                 ratio={ratio}
