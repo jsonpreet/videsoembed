@@ -7,7 +7,7 @@
 body {
   font-family: "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
-  @apply antialiased;
+  @apply min-h-screen bg-black antialiased;
 }
 
 vm-player {
@@ -15,7 +15,7 @@ vm-player {
 }
 
 vm-player video {
-  @apply flex-1 h-[315px] md:h-auto w-auto;
+  @apply flex-1 h-auto w-auto;
 }
 
 vm-player video.sc-vm-file {
