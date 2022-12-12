@@ -13,9 +13,11 @@ body {
 vm-player {
   --vm-player-font-family: 'Roboto', "Helvetica Neue", Arial, sans-serif !important;
 }
+
 vm-player video {
-  @apply flex-1 h-auto w-auto aspect-[16/9];
+  @apply flex-1 h-[315px] md:h-auto w-auto;
 }
+
 vm-player video.sc-vm-file {
   @apply border-inherit align-middle w-full outline-none;
 }
