@@ -7,23 +7,11 @@
 body {
   font-family: "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
-  @apply min-h-screen bg-black antialiased;
+  @apply min-h-screen antialiased;
 }
 
 vm-player {
   --vm-player-font-family: 'Roboto', "Helvetica Neue", Arial, sans-serif !important;
-}
-
-vm-player video {
-  @apply flex-1 h-auto w-auto;
-}
-
-vm-player video.sc-vm-file {
-  @apply border-inherit align-middle w-full outline-none;
-}
-
-vm-player {
-  --vm-player-font-family: 'Roboto', sans-serif !important;
   --vm-player-border-radius: 0 !important;
   --vm-settings-border-radius: 10px !important;
   --vm-menu-bg: rgba(0, 0, 0, 0.40) !important;
@@ -32,6 +20,18 @@ vm-player {
   --vm-controls-bg: rgba(0, 0, 0, 0) !important;
   --vm-slider-value-color: #db2777 !important;
   // --vm-scrim-bg: rgba(0, 0, 0, 0) !important;
+}
+
+vm-player video {
+  @apply flex-1 h-auto w-auto;
+}
+vm-player video.sc-vm-file {
+  @apply border-inherit align-middle w-full outline-none;
+}
+
+vm-player .player {
+	min-width: 275px;
+	min-height: 315px!important;
 }
 
 .media-buffering-container {
