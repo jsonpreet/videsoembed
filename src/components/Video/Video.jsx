@@ -11,6 +11,7 @@ import { APP } from '@utils/constants';
 import truncate from '@utils/truncate';
 import { getVideoExtraData } from '@utils/getVideoExtraData';
 import sanitizeLvprUrl from '@utils/sanitizeLvprUrl';
+import { getVideoStatus } from '@data/api';
 
 const VideoPlayer = dynamic(() => import('./VideoPlayer'), {
   ssr: false
@@ -36,13 +37,9 @@ const Video = ({ video }) => {
     }, [video])
 
     const getVideoData = async () => {
-        const deso = new Deso({ identityConfig: { host: "server" } })
         const videoID = getPlaybackIdFromUrl(video);
-        const request = {
-            "videoId": videoID
-        }
         try {
-            const videoData = await deso.media.getVideoStatus(request)
+            const videoData = await getVideoStatus(videoID)
             const duration = getThumbDuration(videoData.data.Duration);
             const thumb = getVideoThumbnail(video, duration);
             setVideoData({ id: videoID, thumbnail: thumb.url, data: videoData.data, hls: `https://customer-wgoygazehbn8yt5i.cloudflarestream.com/${videoID}/manifest/video.m3u8` })

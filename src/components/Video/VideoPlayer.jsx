@@ -86,7 +86,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
     const onTimeUpdate = (event) => {
         const seconds = Math.round(event.detail)
         if (seconds === currentDuration) {
-        setisStarted(true);
+            setisStarted(true);
         }
     };
 
@@ -99,7 +99,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
         }
         supabase.from('views').insert([req]).then((response) => {
             if (response.error) {
-                logger.error(video.PostHashHex, 'views', response.error);
+                console.log(video.PostHashHex, 'views', response.error);
             }
             return
         })

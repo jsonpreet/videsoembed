@@ -52,6 +52,7 @@ export const DEFAULT_SEO = {
 export const VIDEO_CDN_URL = 'https://cdn.livepeer.com'
 
 export const BASE_URI = process.env.NEXT_PUBLIC_NODE_API_URL || 'https://diamondapp.com/api/v0'; //'https://node.deso.org/api/v0';
+export const BASE_NODE_URI = 'https://node.deso.org/api/v0';
 
 export const DESO_CONFIG = {
   nodeUri: BASE_URI

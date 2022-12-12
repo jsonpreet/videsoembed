@@ -15,7 +15,7 @@ export const getServerSideProps = async (context) => {
     if (!response.PostFound) {
         return null
     }
-    context.res.setHeader('Cache-Control', 'public, s-maxage=86400')
+    //context.res.setHeader('Cache-Control', 'public, s-maxage=86400')
     return {
         props: { video: response.PostFound }
     }
