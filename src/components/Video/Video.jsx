@@ -24,6 +24,8 @@ const Video = ({ video }) => {
     const videoTitle = getVideoTitle(video);
     const [videoUrl, setVideoUrl] = useState(null)
 
+    console.log(video)
+
     useEffect(() => {
         if (extraData && !extraData.isLivePeer) {
             getVideoData();
@@ -102,7 +104,7 @@ const Video = ({ video }) => {
                     />
                     : extraData !== null && !videoData ?
                         <VideoPlayer
-                            hls={sanitizeLvprUrl(extraData?.videoURL)}
+                            hls={extraData?.videoURL}
                             video={video}
                             extraData={extraData}
                             poster={extraData?.Thumbnail}
