@@ -14,7 +14,6 @@ export const getSinglePost = async (postId) => {
         CommentLimit: 2,
         PostHashHex: postId
     });
-    console.log(response)
     if (response && response.data.PostFound) {
         return response.data.PostFound
     }
