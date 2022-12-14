@@ -24,8 +24,6 @@ const Video = ({ video }) => {
     const videoTitle = getVideoTitle(video);
     const [videoUrl, setVideoUrl] = useState(null)
 
-    console.log(video)
-
     useEffect(() => {
         if (extraData && !extraData.isLivePeer) {
             getVideoData();

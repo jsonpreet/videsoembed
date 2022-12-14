@@ -107,7 +107,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
 
 
     return (
-        <div onContextMenu={onContextClick} className="relative group flex flex-col h-screen justify-center items-center w-screen">
+        <div onContextMenu={onContextClick} className="relative group flex flex-col justify-center items-center w-screen">
             <div className="relative z-[5] w-full">
                 <Player
                     tabIndex={1}
