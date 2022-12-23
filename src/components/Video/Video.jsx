@@ -105,6 +105,7 @@ const Video = ({ video }) => {
                     : extraData !== null && !videoData ?
                         <LivePeerPlayer
                             source={extraData?.videoURL}
+                            playbackId={extraData?.playbackId}
                             video={video}
                             extraData={extraData}
                             poster={extraData?.Thumbnail}

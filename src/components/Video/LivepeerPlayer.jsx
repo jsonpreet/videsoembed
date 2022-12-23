@@ -1,10 +1,8 @@
 
 import clsx from 'clsx'
 import { Player } from '@livepeer/react'
-import { getLivePeerPlaybackIdFromUrl } from '@utils/getVideoUrl'
 
-const PlayerInstance = ({ video, ratio, source, poster }) => {
-    const playbackId = getLivePeerPlaybackIdFromUrl(source)
+const PlayerInstance = ({ video, ratio, playbackId, source, poster }) => {
     return (
         <div className='md:relative z-[5]'>
             <Player
@@ -22,12 +20,13 @@ const PlayerInstance = ({ video, ratio, source, poster }) => {
     )
 }
 
-const LivePeerPlayer = ({ video, poster, ratio = '16to9', wrapperClassName, source }) => {
+const LivePeerPlayer = ({ video, poster, playbackId, ratio = '16to9', wrapperClassName, source }) => {
     return (
         <div className={clsx('overflow-hidden', wrapperClassName)}>
             <PlayerInstance
                 video={video}
                 ratio={ratio}
+                playbackId={playbackId}
                 poster={poster}
                 source={source}
             />
