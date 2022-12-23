@@ -120,7 +120,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
                         </Hls>
                     </div>
                     <Poster />
-                    <div className="absolute left-0 bottom-5 w-full z-50 px-4 flex flex-col">
+                    <div className="absolute left-0 bottom-[10px] w-full z-50 px-4 flex flex-col">
                         <TimeSlider>
                             <div className="slider-track"></div>
                             <div className="slider-track fill"></div>
