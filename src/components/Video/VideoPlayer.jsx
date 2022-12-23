@@ -4,12 +4,18 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import PlayerContextMenu from './PlayerContextMenu'
 import {
+    ControlSpacer,
+  Controls,
   DefaultControls,
   DefaultSettings,
   DefaultUi,
   Hls,
+  MuteControl,
+  PlaybackControl,
   Player,
   Poster,
+  Scrim,
+  TimeProgress,
 } from '@vime/react'
 import { getCurrentDuration } from '@utils/getCurrentDuration'
 import { APP } from '@utils/constants'
@@ -107,7 +113,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
 
 
     return (
-        <div onContextMenu={onContextClick} className="relative group flex flex-col justify-center items-center w-screen">
+        <div onContextMenu={onContextClick} className="relative group flex flex-col justify-center items-center h-screen md:h-auto w-screen">
             <div className="relative z-[5] w-full">
                 <Player
                     tabIndex={1}
@@ -121,8 +127,20 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
                     </Hls>
                     <DefaultUi noControls noPoster>
                         <Poster fit='contain' />
-                        <DefaultControls hideOnMouseLeave activeDuration={2000} />
-                        <DefaultSettings />
+                        <Scrim />
+                        <Controls fullWidth pin="topLeft">
+                            <ControlSpacer />
+                            <MuteControl />
+                        </Controls>
+                        <Controls pin="center">
+                            <PlaybackControl hideTooltip style={{ '--vm-control-scale': 1.7 }} />
+                        </Controls>
+                        <Controls fullWidth pin="bottomLeft">
+                            <ControlSpacer />
+                            <TimeProgress />
+                        </Controls>
+                        {/* <DefaultControls hideOnMouseLeave activeDuration={2000} />
+                        <DefaultSettings /> */}
                     </DefaultUi>
 
                     {/* <DefaultUi noControls>

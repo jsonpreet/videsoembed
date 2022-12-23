@@ -12,9 +12,11 @@ import truncate from '@utils/truncate';
 import { getVideoExtraData } from '@utils/getVideoExtraData';
 import sanitizeLvprUrl from '@utils/sanitizeLvprUrl';
 import { getVideoStatus } from '@data/api';
+import LivePeerPlayer from './LivepeerPlayer';
+import NewVideoPlayer from './Player';
 
 const VideoPlayer = dynamic(() => import('./VideoPlayer'), {
-  ssr: false
+    ssr: false
 })
 
 const Video = ({ video }) => {
@@ -93,7 +95,7 @@ const Video = ({ video }) => {
             </Head>
             <div className="relative w-screen h-screen">
                 {!extraData && videoData !== null ?
-                    <VideoPlayer
+                    <NewVideoPlayer
                         source={videoUrl}
                         videoData={videoData}
                         hls={videoData.hls}
@@ -101,8 +103,8 @@ const Video = ({ video }) => {
                         poster={videoData.thubmnail}
                     />
                     : extraData !== null && !videoData ?
-                        <VideoPlayer
-                            hls={extraData?.videoURL}
+                        <LivePeerPlayer
+                            source={extraData?.videoURL}
                             video={video}
                             extraData={extraData}
                             poster={extraData?.Thumbnail}

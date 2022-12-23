@@ -13,3 +13,10 @@ export const getPlaybackIdFromUrl = (video) => {
   const playbackId = url.split('/').pop()
   return playbackId
 }
+
+export const getLivePeerPlaybackIdFromUrl = (url) => {
+  const pathname = new URL(url).pathname
+  console.log(pathname)
+  const playbackId = pathname.split('/')[2]
+  return playbackId
+}

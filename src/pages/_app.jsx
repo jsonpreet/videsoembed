@@ -5,6 +5,8 @@ import { DEFAULT_SEO } from '@utils/constants';
 import { DefaultSeo } from 'next-seo';
 import '@styles/globals.scss'
 import '@vidstack/player/hydrate.js';
+import { LivepeerConfig } from '@livepeer/react';
+import { livepeerClient, playerTheme } from '@utils/getLivePeer';
 
 function MyApp({ Component, pageProps }) {
   const [supabase] = useState(() => createBrowserSupabaseClient())
@@ -15,7 +17,9 @@ function MyApp({ Component, pageProps }) {
         initialSession={pageProps.initialSession}
       >
         <DefaultSeo {...DEFAULT_SEO}/>
-        <Component {...pageProps} />
+        <LivepeerConfig client={livepeerClient()} theme={playerTheme}>
+          <Component {...pageProps} />
+        </LivepeerConfig>
       </SessionContextProvider>
     </>
   )

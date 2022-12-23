@@ -10,29 +10,29 @@ body {
   @apply bg-black min-h-screen antialiased;
 }
 
-vm-player {
-  --vm-player-font-family: 'Roboto', "Helvetica Neue", Arial, sans-serif !important;
-  --vm-player-border-radius: 0 !important;
-  --vm-settings-border-radius: 10px !important;
-  --vm-menu-bg: rgba(0, 0, 0, 0.40) !important;
-  --vm-settings-padding: 0 !important;
-  --vm-menu-item-focus-bg: rgba(90, 90, 90, 0.95) !important;
-  --vm-controls-bg: rgba(0, 0, 0, 0) !important;
-  --vm-slider-value-color: #db2777 !important;
-  // --vm-scrim-bg: rgba(0, 0, 0, 0) !important;
-}
+// vm-player {
+//   --vm-player-font-family: 'Roboto', "Helvetica Neue", Arial, sans-serif !important;
+//   --vm-player-border-radius: 0 !important;
+//   --vm-settings-border-radius: 10px !important;
+//   --vm-menu-bg: rgba(0, 0, 0, 0.40) !important;
+//   --vm-settings-padding: 0 !important;
+//   --vm-menu-item-focus-bg: rgba(90, 90, 90, 0.95) !important;
+//   --vm-controls-bg: rgba(0, 0, 0, 0) !important;
+//   --vm-slider-value-color: #db2777 !important;
+//   // --vm-scrim-bg: rgba(0, 0, 0, 0) !important;
+// }
 
-vm-player video {
-  @apply flex-1 h-auto w-auto aspect-[16/9];
-}
-vm-player video.sc-vm-file {
-  @apply border-inherit align-middle w-full outline-none;
-}
+// vm-player video {
+//   @apply flex-1 h-auto w-auto aspect-[16/9];
+// }
+// vm-player video.sc-vm-file {
+//   @apply border-inherit align-middle w-full outline-none;
+// }
 
-vm-player .player {
-	min-width: 275px;
-	min-height: 315px!important;
-}
+// vm-player .player {
+// 	min-width: 275px;
+// 	min-height: 315px!important;
+// }
 
 .media-buffering-container {
   position: absolute;
@@ -78,4 +78,333 @@ vds-media[waiting] .media-buffering-icon {
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.media-controls {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 48px;
+  opacity: 1;
+  transition: opacity ease 300ms;
+  /* Position above media provider. */
+  z-index: 1;
+}
+
+/* Avoid double controls on iOS when in fullscreen. */
+vds-media[hide-ui] .media-controls {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/*
+ * Hide controls if either user is idle, or media is not
+ * ready for playback.
+ */
+vds-media[user-idle] .media-controls,
+vds-media:not([can-play]) .media-controls {
+  opacity: 0;
+}
+
+/* Fill entire background. */
+vds-poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0;
+}
+
+/* Show poster once it has loaded. */
+vds-poster[img-loaded] {
+  opacity: 1;
+}
+
+/* Hide poster if it fails to load. */
+vds-poster[img-error] {
+  display: none;
+}
+
+/* Gesture can be interacted with anywhere on the player. */
+vds-gesture.anywhere {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Gesture can only be interacted with on the right 25% of the player. */
+vds-gesture.right-25 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25%;
+  height: 100%;
+}
+
+vds-gesture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.seek-gesture {
+  width: 25%;
+}
+
+.seek-gesture.right {
+  left: unset;
+  right: 0;
+}
+
+/* Avoid double controls on iOS when in fullscreen. */
+vds-media[hide-ui] .media-controls,
+/* Hide controls while media is loading, or user is idle. */
+vds-media:not([can-play]) .media-controls,
+vds-media[user-idle] .media-controls {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Show controls if autoplay fails. */
+vds-media[autoplay-error] .media-controls {
+  opacity: 1;
+}
+
+/* Show buffering indicator while media is not ready, or buffering. */
+vds-media:not([can-play]) .buffering-icon,
+vds-media[waiting] .buffering-icon {
+  opacity: 1;
+}
+
+vds-play-button {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+vds-play-button > svg {
+  /** `absolute` so icons are placed on top of each other. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity ease 150ms;
+}
+
+vds-media[paused] .media-pause-icon {
+  opacity: 0;
+}
+
+vds-media:not([paused]) .media-play-icon {
+  opacity: 0;
+}
+
+/** Hide the media replay icon if media is not a the end */
+vds-media[ended] .media-pause-icon {
+  opacity: 0;
+}
+
+vds-media:not([ended]) .media-replay-icon {
+  opacity: 0;
+} 
+
+  /** show the media replay icon if media is at the end */
+vds-media[ended] .media-replay-icon {
+  opacity: 1;
+}
+
+vds-mute-button {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+vds-mute-button > svg {
+  /** `absolute` so icons are placed on top of each other. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity ease 150ms;
+}
+
+vds-media:not([muted]) .media-mute-icon {
+  opacity: 0;
+}
+
+vds-media[muted] .media-unmute-icon {
+  opacity: 0;
+}
+
+vds-fullscreen-button {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+vds-fullscreen-button > svg {
+  /** `absolute` so icons are placed on top of each other. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity ease 150ms;
+}
+
+vds-media[fullscreen] .media-enter-fs-icon {
+  opacity: 0;
+}
+
+vds-media:not([fullscreen]) .media-exit-fs-icon {
+  opacity: 0;
+}
+
+vds-time-slider {
+  --height: 48px;
+  --thumb-width: 24px;
+  --track-height: 4px;
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--height);
+  /** Prevent thumb flowing out of slider. */
+  cursor: pointer;
+}
+
+.slider-track {
+  background-color: rgba(255,255,255,0.35);
+  width: 100%;
+  height: var(--track-height);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+  transform: translateY(-50%);
+}
+
+.slider-track.fill {
+  background-color: #db2777;
+  transform-origin: left center;
+  transform: translateY(-50%) scaleX(var(--vds-fill-rate));
+  will-change: transform;
+  z-index: 1; /** above track. */
+}
+
+.slider-thumb-container {
+  position: absolute;
+  top: 0;
+  left: var(--vds-fill-percent);
+  width: var(--thumb-width);
+  height: 100%;
+  transform: translateX(-50%); /** re-center along x-axis. */
+  z-index: 2; /** above track fill. */
+  will-change: left;
+}
+
+vds-time-slider[dragging] .slider-thumb-container {
+  left: var(--vds-pointer-percent);
+}
+
+.slider-thumb {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: var(--thumb-width);
+  height: var(--thumb-width);
+  border-radius: 9999px;
+  background-color: #fff;
+  transform: translateY(-50%);
+}
+
+vds-volume-slider {
+  --height: 48px;
+  --thumb-width: 20px;
+  --track-height: 4px;
+
+  display: flex;
+  align-items: center;
+  width: calc(100% - 30px);
+  height: var(--height);
+  /** Prevent thumb flowing out of slider. */
+  margin: 0 calc(var(--thumb-width) / 2);
+  cursor: pointer;
+}
+
+vds-volume-slider[dragging] .slider-thumb-container {
+  left: var(--vds-pointer-percent);
+}
+
+.media-time-container {
+  --width: 42px;
+  --width-half: calc(var(--width) / 2);
+  --top: -24px;
+  --opacity-duration: 200ms;
+
+  /* clamp video to left and right of slider. */
+  --left-clamp: max(var(--width-half), var(--vds-pointer-percent));
+  --right-clamp: calc(100% - var(--width-half));
+  --left: min(var(--left-clamp), var(--right-clamp));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: -10px;
+  left: var(--left);
+  width: var(--width);
+  opacity: 0;
+  transition: opacity ease-out var(--opacity-duration);
+  /* re-position to center. */
+  transform: translateX(-50%);
+  will-change: left;
+  border-radius: 2px;
+}
+
+/* show preview while device pointer is inside slider. */
+vds-time-slider[pointing] .media-time-container {
+  opacity: 1;
+  transition: opacity ease-in var(--opacity-duration);
+}
+
+/**
+ * -----------------------------------------------------------
+ * Slider Preview Time
+ * -----------------------------------------------------------
+ */
+
+vds-slider-value-text {
+  font-size: 12px;
+  padding: 0 8px;
+  color: hsl(0, 0%, 70%);
+  background-color: black;
+}
+
+vds-time {
+	color: #fff;
+	position: relative;
 }

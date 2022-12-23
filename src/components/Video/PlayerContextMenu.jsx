@@ -47,7 +47,7 @@ const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, 
             style={{ top: position.y, left: position.x }}
             ref={contextMenuRef}
         >
-            <div
+            {/* <div
             className="px-3 py-2 cursor-pointer hover:bg-gray-700"
             onClick={toggleLoop}
             role="button"
@@ -59,7 +59,7 @@ const PlayerContextMenu = forwardRef(({ position, hideContextMenu, isVideoLoop, 
                     </div>
                     {isVideoLoop && <BiCheck size={20} />}
                 </div>
-            </div>
+            </div> */}
             <div
             className="px-3 py-2 cursor-pointer hover:bg-gray-700"
             onClick={onCopyVideoUrl}
