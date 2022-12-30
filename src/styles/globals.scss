@@ -7,7 +7,8 @@
 body {
   font-family: "Roboto", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
-  @apply bg-black min-h-screen antialiased;
+  @apply bg-black h-screen antialiased;
+  overflow: hidden;
 }
 
 // vm-player {
@@ -79,7 +80,11 @@ vds-media[waiting] .media-buffering-icon {
     transform: rotate(360deg);
   }
 }
+//linear-gradient(rgba(0,130,170,0),rgba(0, 0, 0, 0.8))
 
+.player:hover .controls {
+  @apply opacity-100 transition-opacity delay-100 duration-300
+}
 
 .media-controls {
   display: flex;

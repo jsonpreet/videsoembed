@@ -79,7 +79,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
         <>
             <div
                 onContextMenu={onContextClick}
-                className="relative z-[5] justify-center items-center h-full w-full"
+                className="relative z-[5] player justify-center items-center h-full w-full"
             >
                 <Media
                     className='w-full h-full'
@@ -116,11 +116,11 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
                                 ref={videoRef}
                                 src={hls}
                                 preload="none"
-                            ></video>
+                            />
                         </Hls>
                     </div>
                     <Poster />
-                    <div className="absolute left-0 bottom-[10px] w-full z-50 px-4 flex flex-col">
+                    <div className="absolute left-0 bottom-0 h-18 w-full z-50 px-4 flex flex-col controls bg-gradient-to-b from-[#000]/0 to-[#000]/80">
                         <TimeSlider>
                             <div className="slider-track"></div>
                             <div className="slider-track fill"></div>
@@ -169,7 +169,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
                                             </svg>
                                         </MuteButton>
                                     </div>
-                                    <div className='w-0 flex-1 opacity-0 group-hover:w-40 group-hover:opacity-100 transition-all delay-150 duration-300'>
+                                    <div className='w-0 flex-1 opacity-0 group-hover:w-32 group-hover:opacity-100 transition-all delay-150 duration-300'>
                                         <VolumeSlider>
                                             <div className="slider-track"></div>
                                             <div className="slider-track fill"></div>
@@ -178,7 +178,7 @@ const PlayerInstance = ({ videoData, extraData, video, source, ratio, hls, poste
                                             </div>
                                         </VolumeSlider>
                                     </div>
-                                    <div className='w-44 md:w-56 flex space-x-1'>
+                                    <div className='w-auto text-sm md:text-base md:w-56 flex space-x-1'>
                                         <Time type="current" />
                                         <span className='text-white'>/</span>
                                         <Time type="duration" />
